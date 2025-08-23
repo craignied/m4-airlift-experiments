@@ -216,3 +216,31 @@ Since you have CircuitPython v2 installed in Cursor, here are some pro tips:
 5. Iterate and improve!
 
 This makes development much faster and more efficient than traditional methods!
+
+## 🎯 Key Learnings from This Session
+
+### LED Confusion Resolution
+- **Green LED blinking every 5 seconds** = CircuitPython status indicator (normal behavior)
+- **Tiny "L" LED** = User-controllable LED (works with `board.LED`)
+- **Large RGB NeoPixel LED** = The main programmable LED (what we wanted to control)
+
+### NeoPixel Library Issues
+- **Old neopixel.mpy from 2019** = Incompatible with CircuitPython 9.2.8
+- **Solution**: Download CircuitPython 9.x bundle and use the correct `neopixel.mpy`
+- **Library location**: `/Volumes/CIRCUITPY/lib/neopixel.mpy`
+
+### Working NeoPixel Program
+- **File**: `neopixel_purple_blink.py` (saved in main directory)
+- **Features**: Purple blinking NeoPixel LED every second
+- **Uses**: `board.NEOPIXEL` pin and `neopixel.NeoPixel()` class
+
+### CircuitPython Error Indicators
+- **Green LED blinking every 5 seconds** = Normal operation
+- **Two red flashes every 5 seconds** = Code ended due to exception
+- **Different blink patterns** = Various error conditions
+
+### Development Tips
+- **Hardware reset** (unplug/plug) often fixes library issues
+- **Check library compatibility** with CircuitPython version
+- **Use CircuitPython bundles** for compatible libraries
+- **Look at the right LED** - NeoPixel vs status LED vs tiny "L" LED
