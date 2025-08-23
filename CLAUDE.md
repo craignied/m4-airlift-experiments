@@ -15,6 +15,19 @@ The Metro M4 Airlift Lite is a powerful microcontroller board from Adafruit feat
 4. **CircuitPython firmware** (download from Adafruit)
 5. **Cursor IDE** with CircuitPython v2 extension (✅ Already installed!)
 
+## 📥 Downloads
+
+### CircuitPython Firmware
+- **Download**: [CircuitPython 9.2.8 for Metro M4 Airlift Lite](https://circuitpython.org/board/metro_m4_airlift_lite/)
+- **File**: `adafruit-circuitpython-metro_m4_airlift_lite-en_US-9.2.8.uf2`
+- **Installation**: Double-click reset button, drag .uf2 file to METROM4BOOT drive
+
+### CircuitPython Libraries
+- **Download**: [CircuitPython Libraries Bundle](https://circuitpython.org/libraries)
+- **Version**: Use 9.x bundle for CircuitPython 9.2.8
+- **Installation**: Extract bundle, copy needed .mpy files to `/lib/` folder on CIRCUITPY drive
+- **Note**: Libraries are not included in this repository - download as needed
+
 ## Step 1: Install CircuitPython
 
 1. **Download CircuitPython**:

@@ -16,6 +16,19 @@ A collection of CircuitPython projects and experiments for the Adafruit Metro M4
 - CircuitPython firmware
 - Cursor IDE with CircuitPython v2 extension (recommended)
 
+## 📥 Downloads
+
+### CircuitPython Firmware
+- **Download**: [CircuitPython 9.2.8 for Metro M4 Airlift Lite](https://circuitpython.org/board/metro_m4_airlift_lite/)
+- **File**: `adafruit-circuitpython-metro_m4_airlift_lite-en_US-9.2.8.uf2`
+- **Installation**: Double-click reset button, drag .uf2 file to METROM4BOOT drive
+
+### CircuitPython Libraries
+- **Download**: [CircuitPython Libraries Bundle](https://circuitpython.org/libraries)
+- **Version**: Use 9.x bundle for CircuitPython 9.2.8
+- **Installation**: Extract bundle, copy needed .mpy files to `/lib/` folder on CIRCUITPY drive
+- **Note**: Libraries are not included in this repository - download as needed
+
 ## 🛠️ Setup Instructions
 
 See [CLAUDE.md](CLAUDE.md) for detailed setup and hello world instructions.

@@ -29,6 +29,10 @@ Thumbs.db
 # CIRCUITPY/
 # *.uf2
 
+# CircuitPython library bundles (large download files)
+adafruit-circuitpython-bundle-*/
+*.uf2
+
 # Logs
 *.log
 
