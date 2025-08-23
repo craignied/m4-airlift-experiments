@@ -123,8 +123,57 @@ try:
     except Exception as e:
         print(f"❌ Server test error: {e}")
     
-    # Keep the green light on for 5 seconds
-    time.sleep(5)
+    # Now start the continuous NeoPixel blinking with web updates
+    print("🚀 Starting continuous NeoPixel blinking with web updates...")
+    
+    # Create a persistent requests session for continuous use
+    import adafruit_esp32spi.adafruit_esp32spi_socketpool as socketpool
+    pool = socketpool.SocketPool(esp)
+    requests_session = adafruit_requests.Session(pool)
+    
+    blink_count = 0
+    while True:
+        try:
+            # Turn NeoPixel ON
+            show_status(GREEN, "ON")
+            print(f"💡 NeoPixel ON - Count: {blink_count}")
+            
+            # Send ON status to server
+            status_data = {
+                "status": "ON",
+                "count": blink_count,
+                "board": "Metro M4 Airlift Lite",
+                "ip_address": esp.pretty_ip(esp.ip_address),
+                "timestamp": time.time()
+            }
+            
+            try:
+                response = requests_session.post(f"{server_url}/status", json=status_data)
+                response.close()
+            except Exception as e:
+                print(f"⚠️ Could not send ON status: {e}")
+            
+            time.sleep(2)  # Stay ON for 2 seconds
+            
+            # Turn NeoPixel OFF
+            show_status(OFF, "OFF")
+            print(f"💡 NeoPixel OFF - Count: {blink_count}")
+            
+            # Send OFF status to server
+            status_data["status"] = "OFF"
+            try:
+                response = requests_session.post(f"{server_url}/status", json=status_data)
+                response.close()
+            except Exception as e:
+                print(f"⚠️ Could not send OFF status: {e}")
+            
+            time.sleep(2)  # Stay OFF for 2 seconds
+            
+            blink_count += 1
+            
+        except Exception as e:
+            print(f"❌ Error in blink loop: {e}")
+            time.sleep(5)  # Wait before retrying
     
 except Exception as e:
     print(f"❌ Error: {e}")
