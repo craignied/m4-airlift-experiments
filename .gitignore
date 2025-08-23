@@ -9,6 +9,9 @@ venv/
 .env
 .venv
 
+# Configuration files with sensitive data
+config.py
+
 # IDE and editor files
 .vscode/
 .idea/

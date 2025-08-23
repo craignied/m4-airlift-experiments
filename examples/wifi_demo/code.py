@@ -17,8 +17,8 @@ led = digitalio.DigitalInOut(board.LED)
 led.direction = digitalio.Direction.OUTPUT
 
 # Configure WiFi (replace with your network details)
-WIFI_SSID = "your_wifi_ssid"
-WIFI_PASSWORD = "your_wifi_password"
+WIFI_SSID = "csn8744"
+WIFI_PASSWORD = "1428cf4891"
 
 try:
     # Connect to WiFi
