@@ -229,10 +229,11 @@ This makes development much faster and more efficient than traditional methods!
 - **Solution**: Download CircuitPython 9.x bundle and use the correct `neopixel.mpy`
 - **Library location**: `/Volumes/CIRCUITPY/lib/neopixel.mpy`
 
-### Working NeoPixel Program
-- **File**: `neopixel_purple_blink.py` (saved in main directory)
-- **Features**: Purple blinking NeoPixel LED every second
-- **Uses**: `board.NEOPIXEL` pin and `neopixel.NeoPixel()` class
+### Working Programs
+- **`neopixel_purple_blink.py`**: Purple blinking NeoPixel LED every second
+  - Uses: `board.NEOPIXEL` pin and `neopixel.NeoPixel()` class
+- **`tiny_led_blink.py`**: Blinking the tiny "L" LED every second
+  - Uses: `board.LED` pin and `digitalio.DigitalInOut()` class
 
 ### CircuitPython Error Indicators
 - **Green LED blinking every 5 seconds** = Normal operation

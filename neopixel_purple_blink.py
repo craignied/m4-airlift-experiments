@@ -1,26 +1,31 @@
 # Hello World for Metro M4 Airlift Lite
-# LED Blink Program (tiny L LED)
+# NeoPixel Purple Blink Program
 
 import time
 import board
-import digitalio
+import neopixel
 
 print("Hello World!")
-print("Metro M4 Airlift Lite - LED Blink")
+print("Metro M4 Airlift Lite - NeoPixel Purple Blink")
 
-# Set up the built-in LED (the tiny "L" LED)
-led = digitalio.DigitalInOut(board.LED)
-led.direction = digitalio.Direction.OUTPUT
+# Set up the NeoPixel LED
+# The Metro M4 Airlift Lite has 1 NeoPixel LED
+pixel = neopixel.NeoPixel(board.NEOPIXEL, 1)
 
-print("LED setup complete")
-print("Watch the tiny 'L' LED on the board")
+print("NeoPixel setup complete")
 
-# Blink the LED
+# Define purple color (Red, Green, Blue)
+PURPLE = (128, 0, 128)  # Nice purple color
+OFF = (0, 0, 0)         # Turn off
+
+print("Starting purple NeoPixel blink...")
+
+# Blink the NeoPixel in purple
 while True:
-    led.value = True
-    print("LED ON")
+    pixel[0] = PURPLE  # Turn on purple
+    print("NeoPixel ON - Purple")
     time.sleep(1)
     
-    led.value = False
-    print("LED OFF")
+    pixel[0] = OFF     # Turn off
+    print("NeoPixel OFF")
     time.sleep(1)
