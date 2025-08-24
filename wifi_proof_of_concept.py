@@ -70,60 +70,14 @@ try:
     try:
         from config import SERVER_IP, SERVER_PORT
         server_url = f"http://{SERVER_IP}:{SERVER_PORT}"
-        print(f"🔗 Testing connection to: {server_url}")
-        
-        # Create requests session using socketpool
-        import adafruit_esp32spi.adafruit_esp32spi_socketpool as socketpool
-        pool = socketpool.SocketPool(esp)
-        requests = adafruit_requests.Session(pool)
-        
-        # Test simple GET request first
-        print("📤 Sending simple GET request...")
-        response = requests.get(f"{server_url}/")
-        
-        if response.status_code == 200:
-            print("✅ Server connection successful!")
-            try:
-                print("📥 Reading response...")
-                print("📄 Response status code:", response.status_code)
-                print("📄 Response headers:", response.headers)
-                
-                # For now, skip reading content to avoid hanging
-                print("✅ HTTP GET request successful!")
-                print("💡 Skipping content reading to avoid timeout")
-                
-                # Now try a POST request to send data
-                print("📤 Sending POST request with data...")
-                hello_data = {
-                    "message": "Hello from Metro M4 Airlift Lite!",
-                    "board": "Metro M4 Airlift Lite",
-                    "ip_address": esp.pretty_ip(esp.ip_address),
-                    "status": "WiFi connected and HTTP working"
-                }
-                
-                post_response = requests.post(f"{server_url}/data", json=hello_data)
-                print(f"📄 POST Response status: {post_response.status_code}")
-                
-                if post_response.status_code == 200:
-                    print("✅ Hello world sent successfully!")
-                else:
-                    print(f"❌ POST request failed: {post_response.status_code}")
-                    
-                post_response.close()
-                
-            except Exception as e:
-                print(f"❌ Error reading response: {e}")
-            finally:
-                print("🔒 Closing response...")
-                response.close()
-        else:
-            print(f"❌ Server connection failed: {response.status_code}")
-            response.close()
-            
+        print(f"🔗 Server URL: {server_url}")
     except Exception as e:
-        print(f"❌ Server test error: {e}")
+        print(f"❌ Error loading server config: {e}")
+        show_status(RED, "Config error")
+        while True:
+            time.sleep(1)
     
-    # Now start the continuous NeoPixel blinking with web updates
+    # Skip the initial server test and go straight to blinking
     print("🚀 Starting continuous NeoPixel blinking with web updates...")
     
     # Create a persistent requests session for continuous use
