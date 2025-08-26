@@ -88,6 +88,15 @@ try:
     blink_count = 0
     while True:
         try:
+            # 📊 Memory monitoring (every 10 cycles)
+            if blink_count % 10 == 0:
+                try:
+                    import gc
+                    gc.collect()  # Force garbage collection
+                    print(f"🧹 Memory cleanup - Count: {blink_count}")
+                except:
+                    pass
+            
             # Turn NeoPixel ON
             show_status(GREEN, "ON")
             print(f"💡 NeoPixel ON - Count: {blink_count}")
@@ -107,7 +116,7 @@ try:
             except Exception as e:
                 print(f"⚠️ Could not send ON status: {e}")
             
-            time.sleep(2)  # Stay ON for 2 seconds
+            time.sleep(2)  # Stay ON for 2 seconds (original timing)
             
             # Turn NeoPixel OFF
             show_status(OFF, "OFF")
@@ -121,7 +130,7 @@ try:
             except Exception as e:
                 print(f"⚠️ Could not send OFF status: {e}")
             
-            time.sleep(2)  # Stay OFF for 2 seconds
+            time.sleep(2)  # Stay OFF for 2 seconds (original timing)
             
             blink_count += 1
             
