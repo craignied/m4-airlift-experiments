@@ -47,16 +47,29 @@ async def websocket_handler(websocket):
     try:
         # Send current status immediately
         await websocket.send(json.dumps(latest_neopixel_status))
+        print(f"✅ Sent initial status to {websocket.remote_address}")
         
-        # Keep connection alive
+        # Keep connection alive with proper message handling
         async for message in websocket:
-            # Handle any messages from client (if needed)
-            pass
-            
+            try:
+                # Handle ping/pong for connection health
+                if message == "ping":
+                    await websocket.send("pong")
+                    print(f"🏓 Ping-pong with {websocket.remote_address}")
+                else:
+                    # Handle any other messages from client
+                    print(f"📨 Received message from {websocket.remote_address}: {message}")
+            except Exception as e:
+                print(f"⚠️ Error handling message from {websocket.remote_address}: {e}")
+                break
+                
     except websockets.exceptions.ConnectionClosed:
         print(f"🔌 WebSocket connection closed from {websocket.remote_address}")
+    except Exception as e:
+        print(f"❌ WebSocket error with {websocket.remote_address}: {e}")
     finally:
         websocket_clients.discard(websocket)
+        print(f"🔌 Removed WebSocket client {websocket.remote_address}")
 
 async def broadcast_status():
     """Broadcast status updates to all WebSocket clients"""
@@ -207,12 +220,22 @@ class SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
             const maxReconnectAttempts = 5;
             
             function connectWebSocket() {{
-                ws = new WebSocket('ws://192.168.1.148:8765');
+                ws = new WebSocket('ws://192.168.1.192:8765');
                 
                 ws.onopen = function() {{
                     console.log('WebSocket connected');
                     document.getElementById('connection-status').textContent = '🟢 Connected';
                     reconnectAttempts = 0; // Reset reconnect attempts on successful connection
+                    
+                    // Start ping interval to keep connection alive
+                    if (ws.pingInterval) {{
+                        clearInterval(ws.pingInterval);
+                    }}
+                    ws.pingInterval = setInterval(function() {{
+                        if (ws.readyState === WebSocket.OPEN) {{
+                            ws.send('ping');
+                        }}
+                    }}, 30000); // Ping every 30 seconds
                 }};
                 
                 ws.onmessage = function(event) {{
@@ -228,6 +251,12 @@ class SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
                 ws.onclose = function() {{
                     console.log('WebSocket disconnected');
                     document.getElementById('connection-status').textContent = '🟡 Reconnecting...';
+                    
+                    // Clear ping interval
+                    if (ws.pingInterval) {{
+                        clearInterval(ws.pingInterval);
+                        ws.pingInterval = null;
+                    }}
                     
                     // Try to reconnect instead of reloading the page
                     if (reconnectAttempts < maxReconnectAttempts) {{
